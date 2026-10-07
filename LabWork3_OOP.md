@@ -222,3 +222,74 @@ public class Main {
     }
 }
 ```
+
+**Частина Г**
+
+```java
+class GameCharacter {
+    private int health;
+    private final int maxHealth;
+    private int energy;
+    private final int maxEnergy;
+
+    public GameCharacter(int maxHealth, int maxEnergy) {
+        if (maxHealth <= 0) {
+            maxHealth = 1;
+        }
+
+        if (maxEnergy <= 0) {
+            maxEnergy = 1;
+        }
+
+        this.maxHealth = maxHealth;
+        this.maxEnergy = maxEnergy;
+        this.health = maxHealth;
+        this.energy = maxEnergy;
+    }
+
+    public void takeDamage(int damage) {
+        if (damage > 0) {
+            health = Math.max(0, health - damage);
+        }
+    }
+
+    public void heal(int amount) {
+        if (amount > 0) {
+            health = Math.min(maxHealth, health + amount);
+        }
+    }
+
+    public void spendEnergy(int amount) {
+        if (amount > 0) {
+            energy = Math.max(0, energy - amount);
+        }
+    }
+
+    public void restoreEnergy(int amount) {
+        if (amount > 0) {
+            energy = Math.min(maxEnergy, energy + amount);
+        }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+}
+```
+1. Використано однакові поля
+2. В публічних методах по різному контролюється стан обїєкту
+3. В варіанті ШІ є 2 гетери, яких немає в моєму: максимальне здоров'я та енергія
+4. В моєму варіанті, якщо енергії не вистачає на каст, то нічого не відбудеться, а в ШІ енергія впаде до 0
+5. Я вважаю, що не є доцільним використання final при визначенні максимальних значень, адже зазвичай це значення є змінним(завдяки підняттю левела, чи бафам/дебафам)
