@@ -1,4 +1,5 @@
 **Частина А**
+
 Способи зламати:
 ```java
 SmartLamp lamp = new SmartLamp(true, 100);
@@ -12,7 +13,9 @@ lamp.increaseBrightness(-50); //Стане 50, проте за умовою не
 SmartLamp lamp = new SmartLamp(true, 100);
 lamp.on = false; //Спрацює, проте ми не можемо зовні змінювати цей стан
 ```
+
 Виправлений код
+
 ```java
 class SmartLamp {
     private boolean on;
@@ -54,8 +57,10 @@ class SmartLamp {
     }
 }
 ```
-** Частина Б**
+**Частина Б**
+
 Виправлений мною варіант:
+
 Я ввів поле level, що змінюється від 0 до 1. У нього конвертуються значення, що задаються
 ```java
 class SmartLamp {
@@ -98,6 +103,7 @@ class SmartLamp {
     }
 }
 ```
+
 Відповідь ШІ:
 ```
 Варіант 1 — зберігати яскравість як коефіцієнт
@@ -108,4 +114,111 @@ class SmartLamp {
 
 Можна не зберігати саме значення яскравості 0–100, а зберігати внутрішній індекс рівня, наприклад brightnessLevel у діапазоні 0–20. Один рівень відповідатиме 5% яскравості: brightnessLevel = 14 означатиме яскравість 70. Публічні методи працюватимуть зі значеннями 0–100, а всередині вони перетворюватимуть їх на відповідний рівень.
 ```
+
 **Частина В**
+
+Клас: 
+```java
+class GameCharacter {
+    private int health;
+    private int maxHealth;
+    private int energy;
+    private int maxEnergy;
+
+    public GameCharacter(int maxHealth, int maxEnergy) {
+        if (maxHealth > 0) {
+            this.maxHealth = maxHealth;
+            this.health = maxHealth;
+        } else {
+            this.maxHealth = 1;
+            this.health = 1;
+        }
+
+        if (maxEnergy > 0) {
+            this.maxEnergy = maxEnergy;
+            this.energy = maxEnergy;
+        } else {
+            this.maxEnergy = 1;
+            this.energy = 1;
+        }
+    }
+
+    public void takeDamage(int damage) {
+        if (damage > 0) {
+            health -= damage;
+
+            if (health < 0) {
+                health = 0;
+            }
+        }
+    }
+
+    public void heal(int amount) {
+        if (amount > 0) {
+            health += amount;
+
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
+        }
+    }
+
+    public void spendEnergy(int amount) {
+        if (amount <= energy) {
+            energy -= amount;
+        }
+    }
+
+    public void restoreEnergy(int amount) {
+        if (amount > 0) {
+            energy += amount;
+
+            if (energy > maxEnergy) {
+                energy = maxEnergy;
+            }
+        }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+}
+```
+Main:
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        GameCharacter character = new GameCharacter(100, 50);
+
+        System.out.println("Початковий стан:");
+        System.out.println("Health: " + character.getHealth());
+        System.out.println("Energy: " + character.getEnergy());
+
+        character.takeDamage(30);
+        character.spendEnergy(20);
+
+        System.out.println("\nПісля звичайних операцій:");
+        System.out.println("Health: " + character.getHealth());
+        System.out.println("Energy: " + character.getEnergy());
+
+        character.heal(100);
+        character.restoreEnergy(100);
+
+        System.out.println("\nПісля граничного відновлення:");
+        System.out.println("Health: " + character.getHealth());
+        System.out.println("Energy: " + character.getEnergy());
+
+        character.takeDamage(200);
+        character.spendEnergy(200);
+
+        System.out.println("\nПісля недопустимо великої витрати:");
+        System.out.println("Health: " + character.getHealth());
+        System.out.println("Energy: " + character.getEnergy());
+    }
+}
+```
