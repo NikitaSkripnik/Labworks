@@ -241,22 +241,10 @@ public class Main {
     public static void main(String[] args) {
         Person person = new Person("Шевченко", "Олег", 30);
 
-        Student student1 = new Student(
-                "Іваненко", "Андрій", 19, "АІ-251", "12345"
-        );
-
-        Student student2 = new Student(
-                "Петренко", "Марія", 20, "АІ-252", "67890"
-        );
-
-        Lecturer lecturer1 = new Lecturer(
-                "Коваленко", "Олена", 45, "Інформатики", 25000
-        );
-
-        Lecturer lecturer2 = new Lecturer(
-                "Бондаренко", "Ігор", 50, "Математики", 30000
-        );
-
+        Student student1 = new Student("Іваненко", "Андрій", 19, "АІ-251", "12345");
+        Student student2 = new Student("Петренко", "Марія", 20, "АІ-252", "67890");
+        Lecturer lecturer1 = new Lecturer("Коваленко", "Олена", 45, "Інформатики", 25000);
+        Lecturer lecturer2 = new Lecturer("Бондаренко", "Ігор", 50, "Математики", 30000);
         Person[] people = {person, student1, student2, lecturer1, lecturer2};
 
         for (Person p : people) {
